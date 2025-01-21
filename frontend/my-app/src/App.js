@@ -4,8 +4,9 @@ import './App.css';
 import AdminDashboard from './pages/admin_dashboard';
 import FacultyDashboard from './pages/faculty_dashboard';
 import Login from './pages/login';
-import Signup from './pages/sigup';
+import Signup from './pages/signup';
 import StudentDashboard from './pages/student_dashboard';
+import Navbar from './Components/navbar';
 
 function App(){
   return(
@@ -14,6 +15,7 @@ function App(){
           <Routes>
             <Route path = "/login" element = {<Login/>}/>
             <Route path = "/signup" element = {<Signup/>}/>
+            <Route path = "/navbar" element = {<Navbar/>}/>
             <Route path = "/admin_dashboard" element = {<AdminDashboard/>}/>
             <Route path = "/faculty_dashboard" element = {<FacultyDashboard/>}/>  
             <Route path = "/student_dashboard" element = {<StudentDashboard/>}/>  
