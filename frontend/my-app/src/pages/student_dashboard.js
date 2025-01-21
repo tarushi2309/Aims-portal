@@ -1,9 +1,12 @@
 import React from 'react';
+import StudentNavbar from '../components/studentNavbar';
+import StudentDetails from '../components/studentDetails';
 
 function StudentDashboard() {
   return (
     <div>
-      <h1>Student Dashboard</h1>
+      <StudentNavbar studentRollNo="2022csb1112"/>
+      <StudentDetails/>
     </div>
   );
 }
