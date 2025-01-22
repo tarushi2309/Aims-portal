@@ -48,13 +48,16 @@ def generate_otp(length=6):
     otp = ''.join([str(random.randint(0, 9)) for _ in range(length)])
     return otp
 
+
+    server.login(sender,"eipn qsmt ffbv zqjm")               # dummy passcode. Sender should be your email id. passcode is app password. Explained in detail in readme file
+    server.sendmail(sender,receiver,text)
+
 def send_email(sender,receiver):
- 
     otp = generate_otp()
     cursor.execute(
-            'delete from otp_table where user_id = % s and TIMESTAMPDIFF(MINUTE, created_at, NOW()) > 3', (receiver,) )
+            'delete from otp_table where user_id = %s and TIMESTAMPDIFF(MINUTE, created_at, NOW()) > 3', (receiver,) )
     conn.commit()
-    cursor.execute('insert into otp_table (user_id,otp,created_at) values (%s,%s,%s)',(receiver,otp,NOW(),))
+    cursor.execute('insert into otp_table (user_id,otp,created_at) values (%s,%s,%s)',(receiver,otp,datetime.now(),))
     conn.commit()
     text=f"Subject : OTP for AIMS Login\n\n Your login otp is {otp} \n\n This is valid for 3 minutes"
     server = smtplib.SMTP("smtp.gmail.com",587)
@@ -63,21 +66,18 @@ def send_email(sender,receiver):
     server.login(sender,"eipn qsmt ffbv zqjm")               # dummy passcode. Sender should be your email id. passcode is app password. Explained in detail in readme file
     server.sendmail(sender,receiver,text)
 
-
 @app.route('/login', methods=['GET','POST'])
 def login():
     
     data = request.get_json()
-    email_id=data.get('email')
+    email_id=json.dumps(data.get('email'))
 
     if not email_id:
         return jsonify({"error": "Email is required"}), 400
 
     print(f"Received email: {email_id}")
-    #send_email(aims_email, email_id)
+    send_email(aims_email, email_id)
 
-    otp = generate_otp()
-    return jsonify({"otp": otp}), 200
 
 
 @app.route('/login_otp/<email_id>',methods=['GET','POST'])
