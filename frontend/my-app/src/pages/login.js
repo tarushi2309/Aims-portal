@@ -1,16 +1,24 @@
 import React, { useState } from 'react';
+import {useNavigate} from "react-router-dom";
 import axios from 'axios';
 
 function Login() {
   const [email, setEmail] = useState('');
   const [otp, setOtp] = useState('');
   const [sentOtp, setSentOtp] = useState(null); // State to store the generated OTP
-  const [step, setStep] = useState(1); // To control the flow of form (step 1 = email, step 2 = OTP)
+  const [step, setStep] = useState(1); // To control the flow of form (step 1 = email, step 2 = OTP)*/
+  /*const response =  axios.post('http://127.0.0.1:3000/login',{ email:email },{
+    headers: {
+        'Content-Type': 'application/json', // Explicitly set the Content-Type
+    },
+});*/
 
   // Function to send OTP request to backend
   const sendOtp = async () => {
     try {
-      const response = await axios.post('http://localhost:5000/send-otp', { email });
+      const response =  axios.post('http://127.0.0.1:3000/login',{ email:email }, {headers: {
+        'Content-Type': 'application/json', // Explicitly set the Content-Type
+    }});
       setSentOtp(response.data.otp); // Set the sent OTP from the backend response
       setStep(2); // Move to step 2 (OTP input)
       console.log('OTP Sent:', response.data.otp); // OTP is sent from the backend to the email
